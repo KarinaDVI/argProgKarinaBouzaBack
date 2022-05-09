@@ -86,31 +86,6 @@ public class SkillController {
 
         return new ResponseEntity<>(skillService.saveSkill(skill), HttpStatus.OK);
     }
-
-    @PutMapping("/edit/{id}")
-    public String editSkill(@PathVariable Long id,
-                                  @PathParam("name") String name,
-                                  @PathParam("progress") int progress,
-                                  @PathParam("confirms") int confirms,
-                                  @PathParam("confirmsNames") String confirmsNames,
-                                  @PathParam("outerStrokeColor") String outerStrokeColor,
-                                  @PathParam("innerStrokeColor") String innerStrokeColor
-                                  )
-    {
-        Skill skill1 = skillService.findSkill(id);
-        
-        // Cargamos los valores en el modelo de datos
-        skill1.setName(name);
-        skill1.setProgress(progress);
-        skill1.setConfirms(confirms);
-        skill1.setConfirmsNames(confirmsNames);
-        skill1.setOuterStrokeColor(outerStrokeColor);
-        skill1.setInnerStrokeColor(innerStrokeColor);
-        
-        skillService.saveSkill(skill1);
-
-        return "Habilidad editada";
-    }
     
     //De hernan,(copia del de person) solo cambie person por skill. 
     //Trae un skill sin relacion
@@ -118,6 +93,7 @@ public class SkillController {
     public Skill cambiarSkill(@PathVariable("id") Long id, @RequestBody Skill skillTochange) {
 
         Skill s = skillService.findSkill(id);
+        System.out.println(s);
         skillTochange.setId(s.getId());
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setSkipNullEnabled(true).setMatchingStrategy(MatchingStrategies.STRICT);
